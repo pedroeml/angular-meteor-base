@@ -1,0 +1,5 @@
+<h2 *ngIf="!!film">Film Details (ID: {{ film.id }})</h2>
+<app-film-form
+  [film]="film"
+  (changed)="updateFilm($event)">
+</app-film-form>
