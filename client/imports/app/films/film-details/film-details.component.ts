@@ -26,7 +26,11 @@ export class FilmDetailsComponent {
     this.isLoading = false;
     this.loadFilm().subscribe(
       res => {
-        this.film = res;
+        if (isNullOrUndefined(res)) {
+          this.router.navigateByUrl('/films');
+        } else {
+          this.film = res;
+        }
       },
       err => {
         this.isLoading = false;
