@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 
-import { Observable } from 'rxjs';
-import { first, tap, map, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { first, tap, switchMap } from 'rxjs/operators';
 
 import { isNullOrUndefined } from 'util';
 
@@ -15,7 +15,7 @@ import { FilmsService } from '../service/films.service';
   styleUrls: ['./film-details.component.scss'],
 })
 export class FilmDetailsComponent {
-  private id: string;
+  public id: string;
   public film: Film;
   public isLoading: boolean;
 
@@ -24,26 +24,46 @@ export class FilmDetailsComponent {
     private readonly route: ActivatedRoute,
     private readonly router: Router) {
     this.isLoading = false;
-    this.loadFilm().subscribe();
+    this.loadFilm().subscribe(
+      res => {
+        console.log('res', res);
+        this.film = res;
+      },
+      err => {
+        console.log('err', err);
+        this.isLoading = false;
+        this.router.navigateByUrl('/films');
+      },
+    );
   }
 
   private loadFilm(): Observable<Film> {
     return this.route.params.pipe(
       first(),
       tap(() => { this.isLoading = true; }),
-      map((params: ParamMap) => !isNullOrUndefined(params['id']) ? params['id'] : ''),
+      switchMap((params: ParamMap) => {
+        if (isNullOrUndefined(params['id'])) {
+          return Observable.throw('No Film ID found in URL');
+        } else {
+          return of(params['id']);
+        }
+      }),
       tap(id => { this.id = id; }),
       switchMap(id => this.service.findFilm(id)),
       tap(() => { this.isLoading = false; }),
-      tap(film => { 
-        if (isNullOrUndefined(film)) {
-          this.router.navigateByUrl('/films');
-        }
-      }),
     );
   }
 
   public updateFilm(film: Film): void {
-    // TODO: implementation
+    console.log('film:', film);
+
+    this.service.updateFilm(this.id, film).subscribe(
+      rows => {
+        console.log('rows', rows);
+        if (rows > 0) {
+          this.film = { ... this.film, ... film};
+          console.log('this.film:', this.film);
+        }
+      });
   }
 }
