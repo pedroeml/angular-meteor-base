@@ -1,14 +1,41 @@
-<form [formGroup]="form">
-  <input formControlName="titleCtrl"
-    type="text"
-    placeholder="Title">
-  <input formControlName="directorCtrl"
-    type="text"
-    placeholder="Director">
-  <input formControlName="producerCtrl"
-    type="text"
-    placeholder="Producer">
-  <input formControlName="releaseDateCtrl"
-    type="date"
-    [(value)]="formDate">
-</form>
+<div class="container">
+  <form [formGroup]="form">
+    <div class="row">
+      <div class="form-group col-sm-6">
+        <label for="title">Title</label>
+        <input id="title"
+          class="form-control"
+          type="text"
+          formControlName="titleCtrl"
+          placeholder="Title">
+      </div>
+      <div class="form-group col-sm-5">
+        <label for="">Director</label>
+        <input id="director"
+          class="form-control"  
+          type="text"
+          formControlName="directorCtrl"
+          placeholder="Director">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-6">
+        <label for="producer">Producer</label>
+        <input id="producer"
+          class="form-control"  
+          type="text"
+          formControlName="producerCtrl"
+          placeholder="Producer">
+      </div>
+      <div class="col-sm-2"></div>
+      <div class="form-group col-sm-5">
+        <label for="release-date">Release Date</label>
+        <input id="release-date"
+          class="form-control"  
+          type="date"
+          formControlName="releaseDateCtrl"
+          [(value)]="formDate">
+      </div>
+    </div>
+  </form>
+</div>
