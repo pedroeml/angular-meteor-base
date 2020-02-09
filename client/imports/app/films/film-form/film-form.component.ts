@@ -35,8 +35,7 @@ export class FilmFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.form = this.formFactory.create(this.film);
-    console.log(`formDate ${this.formDate}`);
-    console.log(`releaseDate ${this.film.releaseDate}`);
+
     if (isNullOrUndefined(this.film.releaseDate)) {
       this.observeFormFields();
       this.formDate = this.formDate;

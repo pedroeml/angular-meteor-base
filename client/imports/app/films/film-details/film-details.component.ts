@@ -26,11 +26,9 @@ export class FilmDetailsComponent {
     this.isLoading = false;
     this.loadFilm().subscribe(
       res => {
-        console.log('res', res);
         this.film = res;
       },
       err => {
-        console.log('err', err);
         this.isLoading = false;
         this.router.navigateByUrl('/films');
       },
@@ -55,14 +53,10 @@ export class FilmDetailsComponent {
   }
 
   public updateFilm(film: Film): void {
-    console.log('film:', film);
-
     this.service.updateFilm(this.id, film).subscribe(
       rows => {
-        console.log('rows', rows);
         if (rows > 0) {
           this.film = { ... this.film, ... film};
-          console.log('this.film:', this.film);
         }
       });
   }

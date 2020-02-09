@@ -20,23 +20,18 @@ export class FilmAddComponent {
   private addFilm(film: Film): void {
     this.service.addFilm(film).subscribe(
       id => {
-        console.log('id', id);
         this.film._id = id;
       });
   }
 
   public updateFilm(film: Film): void {
-    console.log('film:', film);
-
     if (isNullOrUndefined(this.film._id)) {
       this.addFilm(film);
     } else {
       this.service.updateFilm(this.film._id, film).subscribe(
         rows => {
-          console.log('rows', rows);
           if (rows > 0) {
             this.film = { ... this.film, ... film};
-            console.log('this.film:', this.film);
           }
         });
     }
