@@ -1,0 +1,25 @@
+<button
+  title="Add film"
+  [routerLink]="['/films/add']"
+  routerLinkActive="router-link-active">
+  Add
+</button>
+<ul>
+  <li *ngFor="let film of films | async">
+    <button
+      title="View film details"
+      [routerLink]="['/films', film._id]"
+      routerLinkActive="router-link-active">
+      View
+    </button>
+    <button
+      title="Delete film"
+      (click)="deleteFilm(film)">
+      Delete
+    </button>
+    TITLE: "{{ film.title }}"
+    DIRECTOR: "{{ film.director }}"
+    PRODUCER: "{{ film.producer }}"
+    RELEASE DATE: "{{ film.releaseDate }}"
+  </li>
+</ul>
