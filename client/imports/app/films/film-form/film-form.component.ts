@@ -1,9 +1,10 @@
-import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { Subject, Observable, of } from 'rxjs';
 import { takeUntil, debounceTime, distinctUntilChanged, tap, map, switchMap } from 'rxjs/operators';
+
+import { isNullOrUndefined } from 'util';
 
 import { Film } from '../../../../../imports/models/film';
 import { FilmFormControlsEnum } from '../enum/film-form-controls.enum';
@@ -34,12 +35,30 @@ export class FilmFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.form = this.formFactory.create(this.film);
-    this.observeFormFields();
+    console.log(`formDate ${this.formDate}`);
+    console.log(`releaseDate ${this.film.releaseDate}`);
+    if (isNullOrUndefined(this.film.releaseDate)) {
+      this.observeFormFields();
+      this.formDate = this.formDate;
+    } else {
+      this.formDate = this.film.releaseDate;
+      this.observeFormFields();
+    }
   }
 
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  get formDate(): string {
+    return this.form.controls[FilmFormControlsEnum.RELEASE_DATE_CTRL].value;
+  }
+
+  set formDate(date: string) {
+    if (!isNullOrUndefined(date) && date.length > 0) {
+      this.form.controls[FilmFormControlsEnum.RELEASE_DATE_CTRL].setValue(date);
+    }
   }
 
   private observeFormFields(): void {

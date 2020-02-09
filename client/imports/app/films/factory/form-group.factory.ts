@@ -17,8 +17,7 @@ export class FormGroupFactory {
     const title: string = !isNullOrUndefined(film) && !isNullOrUndefined(film.title) ? film.title : '';
     const director: string = !isNullOrUndefined(film) && !isNullOrUndefined(film.director) ? film.director : '';
     const producer: string = !isNullOrUndefined(film) && !isNullOrUndefined(film.producer) ? film.producer : '';
-    const releaseDate: string = this.datePipe.transform(!isNullOrUndefined(film) && !isNullOrUndefined(film.releaseDate) ? film.releaseDate : new Date(), 'MM/dd/yyyy');
-
+    const releaseDate: string = this.datePipe.transform(!isNullOrUndefined(film) && !isNullOrUndefined(film.releaseDate) ? new Date(film.releaseDate) : new Date(), 'yyyy-MM-dd');
     return this.formBuilder.group({
       titleCtrl: [title],
       directorCtrl: [director],
