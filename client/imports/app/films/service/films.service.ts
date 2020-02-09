@@ -14,14 +14,18 @@ export class FilmsService {
   }
 
   public findFilm(id: string): Observable<Film> {
-    return MeteorObservable.subscribe('findFilm', id);
+    return MeteorObservable.call('findFilm', id);
   }
 
-  public addFilm(film: Film): void {
-    Meteor.call('addFilm', film);
+  public addFilm(film: Film): Observable<string> {
+    return MeteorObservable.call('addFilm', film);
   }
 
-  public deleteFilm(id: string): void {
-    // TODO: implementation
+  public updateFilm(id: string, film: Film): Observable<number> {
+    return MeteorObservable.call('updateFilm', id, film);
+  }
+
+  public deleteFilm(id: string): Observable<number> {
+    return MeteorObservable.call('removeFilm', id);
   }
 }
