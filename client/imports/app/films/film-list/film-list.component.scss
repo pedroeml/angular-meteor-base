@@ -1,0 +1,10 @@
+div.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  div.row {
+    display: inline-block;
+    padding-bottom: 10px;
+  }
+}
